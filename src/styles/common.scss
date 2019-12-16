@@ -1,0 +1,27 @@
+.el__header {
+    height: 50px !important;
+    .fatherhome {
+        height: 50px !important;
+        padding: 0 !important;
+    }
+    .el-input__inner {
+        height: 30px !important;
+        border-radius: 15px !important;
+        background: #888888 !important;
+        border: none !important;
+        transition: all 0.5s;
+        &:hover {
+            background-color: white !important;
+        }
+    }
+    .el-input__icon {
+        line-height: 30px !important;
+    }
+    .el-main {
+        padding: 0 !important;
+    }
+    .el-footer {
+        height: 190px !important;
+        padding: 0 !important;
+    }
+}
