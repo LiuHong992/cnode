@@ -1,40 +1,52 @@
 <template>
   <div>
-    <el-container class="bg">
+    <el-container>
       <el-container class="el__header">
+        <!-- 父路由头部 -->
         <el-header class="fatherhome">
           <div class="homeleft">
             <img
               @click="goTohome"
               src="../../assets/images/cnodejs_light.svg"
               alt
-              style="width:125px;height:35px;margin-top:7px;"
+              style="width:125px;height:35px;margin-top:4px;"
             />
             <el-input class="el-ipt" prefix-icon="el-icon-search" v-model="input2"></el-input>
           </div>
           <div class="homeright">
-            <div>首页</div>
+            <div @click="goTohome">首页</div>
             <div>新手入门</div>
             <div>API</div>
             <div>关于</div>
             <div>注册</div>
-            <div>退出</div>
+            <div @click="exitHome" v-if="this.users">退出</div>
+            <div @click="goToHome" v-else>登录</div>
           </div>
         </el-header>
-
+        <!-- 父路由内容层和侧边栏 -->
         <el-container class="middlecontainer">
+          <!-- 父路由内容层 -->
           <el-main class="homecontainer">
             <router-view />
           </el-main>
-          <el-aside class="homeaside" width="21%">
-            <div class="loginstate">
+          <!-- 父路由侧边栏 -->
+          <el-aside class="homeaside" width="22%">
+            <div class="loginstate" v-if="this.users">
+              <h3>
+                <span>用户名：</span>
+                {{users}}
+              </h3>
+              <p>欢迎来到CNode：Node.js专业中文社区</p>
+              <el-button type="primary" @click="exitHome">退出登录</el-button>
+            </div>
+            <div class="loginstate" v-else>
               <h3>CNode：Node.js专业中文社区</h3>
               <p>
                 您可以
                 <span>登录</span> 或
                 <span>注册</span> , 也可以
               </p>
-              <el-button type="primary">立即登录</el-button>
+              <el-button type="primary" @click="goToHome">立即登录</el-button>
             </div>
             <div class="homeimages">
               <img src="../../assets/images/Detailpage-aside1.jpg" alt />
@@ -92,6 +104,7 @@
             </div>
           </el-aside>
         </el-container>
+        <!-- 父路由底部导航栏 -->
         <el-footer class="footers">
           <div class="footermain">
             <div class="links">
@@ -104,12 +117,15 @@
               服务器赞助商为
               <img src="../../assets/images/bottom1.jpg" alt />，
               存储赞助商为
-              <img src="../../assets/images/bottom2.jpg" alt="">，
+              <img src="../../assets/images/bottom2.jpg" alt />，
               由
-              <img src="../../assets/images/bottom3.jpg" alt="">
+              <img src="../../assets/images/bottom3.jpg" alt />
               提供应用性能服务。
             </p>
-            <p>新手搭建 Node.js 服务器，推荐使用无需备案的 <span>DigitalOcean(https://www.digitalocean.com/)</span></p>
+            <p>
+              新手搭建 Node.js 服务器，推荐使用无需备案的
+              <span>DigitalOcean(https://www.digitalocean.com/)</span>
+            </p>
           </div>
         </el-footer>
       </el-container>
@@ -118,19 +134,34 @@
 </template>
 
 <script>
+// import Backtop from '../../components/Backtop'
 export default {
   data() {
     return {
-      input2: ""
+      input2: "",
+      users: ""
     };
   },
-  components: {},
+  components: {
+    // Backtop,
+  },
   methods: {
     goTohome() {
       this.$router.push("/homepage");
+    },
+    exitHome() {
+      this.users = "";
+      sessionStorage.removeItem("user");
+      console.log(this.users);
+    },
+    goToHome() {
+      this.$router.push("/");
     }
   },
-  mounted() {},
+  mounted() {
+    this.users = sessionStorage.getItem("user");
+    // window.history.back((this.users = ""));
+  },
   watch: {},
   computed: {
     user() {
@@ -144,6 +175,9 @@ export default {
 </script>
 
 <style scoped lang='scss'>
+ul {
+  list-style: none;
+}
 .el__header {
   width: 100%;
   background-color: #444444;
@@ -153,6 +187,7 @@ export default {
     justify-content: space-between;
     width: 88%;
     margin: 0 auto;
+    // 头部左边
     .homeleft {
       display: flex;
       width: 380px;
@@ -162,6 +197,7 @@ export default {
         margin: 10px 0 10px 20px;
       }
     }
+    // 头部右边
     .homeright {
       display: flex;
       justify-content: space-around;
@@ -177,27 +213,32 @@ export default {
       }
     }
   }
-  //首页侧边栏
+  //首页内容层和侧边栏
   .middlecontainer {
     width: 88%;
     margin: 20px auto;
+    // 首页内容层
     .homecontainer {
-      width: 78%;
-      border: 1px solid darkgray;
+      width: 77%;
+      // border: 1px solid darkgray;
     }
+    // 首页侧边栏
     .homeaside {
-      height: 1570px;
       margin-left: 1%;
       .loginstate {
-        height: 100px;
+        height: 125px;
         padding: 10px;
         font-size: 14px;
         margin-bottom: 10px;
-        border: 1px solid #666;
+        background-color: white;
         h3 {
           height: 26px;
           line-height: 26px;
           margin-bottom: 10px;
+          span {
+            font-size: 14px;
+            font-weight: normal;
+          }
         }
         p {
           margin-bottom: 10px;
@@ -207,10 +248,10 @@ export default {
         }
       }
       .homeimages {
-        height: 210px;
-        padding: 10px;
+        height: 212px;
+        padding: 7px;
         margin-bottom: 10px;
-        border: 1px solid #666;
+        background-color: white;
         img {
           width: 270px;
           height: 65px;
@@ -220,37 +261,44 @@ export default {
       .noperson {
         height: 220px;
         margin-bottom: 10px;
-        border: 1px solid #666;
         font-size: 14px;
+        background-color: white;
         h1 {
           height: 20px;
           line-height: 20px;
           padding: 10px;
           background-color: #f6f6f6;
+          margin: 0;
         }
         ul {
           padding: 10px;
+          margin: 0;
           li {
             height: 30px;
             line-height: 30px;
             color: rgb(172, 169, 169);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
           }
         }
       }
       .integral {
         height: 355px;
         margin-bottom: 10px;
-        border: 1px solid #666;
+        background-color: white;
         h1 {
           height: 20px;
           line-height: 20px;
           padding: 10px;
           background-color: #f6f6f6;
           font-size: 14px;
+          margin: 0;
         }
         ul {
           padding: 10px;
           font-size: 12px;
+          margin: 0;
           li {
             height: 30px;
             line-height: 30px;
@@ -261,17 +309,19 @@ export default {
       .friendshipcommunity {
         height: 295px;
         margin-bottom: 10px;
-        border: 1px solid #666;
+        background-color: white;
         h1 {
           height: 20px;
           line-height: 20px;
           padding: 10px;
           background-color: #f6f6f6;
           font-size: 14px;
+          margin: 0;
         }
         ul {
           height: 235px;
           padding: 10px;
+          margin: 0;
           li {
             width: 270px;
             height: 50px;
@@ -285,13 +335,14 @@ export default {
       }
       .ewm {
         height: 285px;
-        border: 1px solid #666;
+        background-color: white;
         h1 {
           height: 20px;
           line-height: 20px;
           padding: 10px;
           background-color: #f6f6f6;
           font-size: 14px;
+          margin: 0;
         }
         .erweimaimage {
           padding: 10px;
@@ -304,6 +355,7 @@ export default {
             font-size: 14px;
             text-align: center;
             color: darkgray;
+            margin: 0;
           }
         }
       }
@@ -313,6 +365,7 @@ export default {
   .footers {
     width: 100%;
     margin-top: 10px;
+    background-color: white;
     .footermain {
       width: 88%;
       height: 190px;
@@ -342,19 +395,19 @@ export default {
             width: 92px;
             height: 20px;
             margin-top: 17px;
-            &:nth-child(2){
+            &:nth-child(2) {
               width: 115px;
               height: 44px;
               margin-top: 5px;
             }
-            &:last-child{
+            &:last-child {
               width: 166px;
               height: 54px;
               margin-top: 0px;
             }
           }
         }
-        span{
+        span {
           color: steelblue;
         }
       }

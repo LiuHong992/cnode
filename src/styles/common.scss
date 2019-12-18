@@ -19,6 +19,13 @@
     }
     .el-main {
         padding: 0 !important;
+        overflow: visible !important;
+    }
+    .el-pagination {
+        background-color: #e1e1e1 !important;
+    }
+    .el-aside {
+        overflow: visible !important;
     }
     .el-footer {
         height: 190px !important;

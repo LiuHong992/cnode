@@ -20,20 +20,20 @@ const routes = [{
             import ( /* webpackChunkName: "about" */ '../views/About.vue')
     },
     {
-        path: '',
+        path: '/homepage',
         component: Father,
         children: [{
-            path: 'homepage',
+            path: '',
             name: 'homepage',
             component: () =>
                 import ('../views/cnode/Homepage.vue')
         }]
     },
     {
-        path: '',
+        path: '/details',
         component: Father,
         children: [{
-            path: 'details',
+            path: '',
             name: 'details',
             component: () =>
                 import ('../views/cnode/Detailspage.vue')

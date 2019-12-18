@@ -19,6 +19,7 @@
           <el-input v-model="ruleForm.passwordagain" type="password" placeholder="请再次输入密码"></el-input>
         </el-form-item>
         <el-button class="loginbtn" type="primary" @click="submitForm('ruleForm')">立即登录</el-button>
+        <el-button type="info" @click="goTohomes">游客登录</el-button>
       </el-form>
     </div>
   </div>
@@ -90,6 +91,9 @@ export default {
           return false;
         }
       });
+    },
+    goTohomes() {
+      this.$router.push('/homepage')
     }
   },
   mounted() {},
@@ -124,7 +128,7 @@ export default {
     width: 440px;
     margin: 20px auto;
     .loginbtn {
-      margin-left: 191px;
+      margin-left: 141px;
     }
   }
 }

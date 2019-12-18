@@ -6,6 +6,7 @@ import service from './http'
 import dayjs from 'dayjs'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
+import 'github-markdown-css'
 
 Vue.use(ElementUI);
 Vue.config.productionTip = false
